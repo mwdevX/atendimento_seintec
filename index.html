@@ -1,51 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial;
+      margin: 0;
+      font-family: Arial, sans-serif;
       background: #f4f6f9;
+
+      /* Centralização perfeita */
       display: flex;
       justify-content: center;
-      padding: 40px;
+      align-items: center;
+
+      min-height: 100vh;
+      padding: 20px;
     }
 
     .form-container {
       background: white;
       padding: 25px;
-      border-radius: 10px;
-      width: 350px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-top: 0;
+      text-align: center;
     }
 
     input, textarea {
       width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
+      margin-bottom: 12px;
+      padding: 12px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: none;
+      min-height: 100px;
     }
 
     button {
       width: 100%;
       padding: 12px;
-      background: #007bff;
+      background: linear-gradient(135deg, #007bff, #0056b3);
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
     }
 
     button:hover {
-      background: #0056b3;
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .msg {
       margin-top: 10px;
       text-align: center;
+      font-size: 14px;
+    }
+
+    /* Mobile ajustes finos */
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 20px;
+        border-radius: 10px;
+      }
     }
   </style>
 </head>
+
 <body>
 
 <div class="form-container">
@@ -55,6 +99,10 @@
     <input type="text" name="nome" placeholder="Nome" required>
     <input type="email" name="email" placeholder="Email" required>
     <textarea name="mensagem" placeholder="Mensagem" required></textarea>
+
+    <!-- Anti-spam invisível -->
+    <input type="text" name="website" style="display:none">
+
     <button type="submit">Enviar</button>
   </form>
 
@@ -64,9 +112,16 @@
 <script>
 const form = document.getElementById("form");
 const msg = document.getElementById("msg");
+const button = form.querySelector("button");
 
 form.addEventListener("submit", function(e) {
   e.preventDefault();
+
+  // Anti-spam
+  if (form.website.value !== "") return;
+
+  button.innerText = "Enviando...";
+  button.disabled = true;
 
   const data = {
     nome: form.nome.value,
@@ -80,13 +135,17 @@ form.addEventListener("submit", function(e) {
   })
   .then(res => res.json())
   .then(res => {
-    msg.innerText = "Enviado com sucesso!";
+    msg.innerText = "Mensagem enviada com sucesso!";
     msg.style.color = "green";
     form.reset();
   })
   .catch(err => {
-    msg.innerText = "Erro ao enviar.";
+    msg.innerText = "Erro ao enviar. Tente novamente.";
     msg.style.color = "red";
+  })
+  .finally(() => {
+    button.innerText = "Enviar";
+    button.disabled = false;
   });
 });
 </script>
