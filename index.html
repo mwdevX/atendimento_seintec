@@ -1,76 +1,243 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Registro de Atendimento - TI</title>
+
 <style>
-body { font-family: Arial; background:#f4f6f9; margin:0; padding:20px; }
-.container { max-width:500px; margin:auto; background:#fff; padding:20px; border-radius:10px; }
-input, textarea { width:100%; margin:10px 0; padding:10px; }
-button { width:100%; padding:12px; background:#007bff; color:#fff; border:none; }
-.msg { text-align:center; margin-top:10px; }
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #eef2f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+input:focus, select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0,123,255,0.3);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:disabled {
+  background: #aaa;
+}
+
+.msg {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 20px;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<h2>Abrir Chamado</h2>
+<div class="card">
+
+<h2>Registro de Atendimento</h2>
 
 <form id="form">
-<input name="nome" placeholder="Nome" required>
-<input name="email" placeholder="Email" required>
-<textarea name="mensagem" placeholder="Descreva o problema" required></textarea>
-<button type="submit">Enviar</button>
+
+<input type="text" name="nome" placeholder="Nome completo" required>
+
+<select name="escola" required>
+<option value="">Selecione a Unidade Escolar</option>
+
+<option>ALAY JOSE CORREA VEREADOR</option>
+<option>ALDEIA ARACA MIRIM</option>
+<option>ALDEIA ITAPU MIRIM</option>
+<option>ALDEIA PEGUAO TY</option>
+<option>ALDEIA PINDO TY</option>
+<option>ALDEIA RIO BRANCO II</option>
+<option>ALDEIA SANTA CRUZ</option>
+<option>ALDEIA TAKUARI TY</option>
+<option>ALDEIA TAQUARI</option>
+<option>ANTONIO DUARTE DE CASTRO</option>
+<option>ANTONIO FERNANDES PROFESSOR</option>
+<option>ARMANDO SALLES OLIVEIRA GOV</option>
+<option>AURORA COELHO PROFESSORA</option>
+<option>BERNARDO FERREIRA MACHADO CAPITAO</option>
+<option>CEEJA RICARDO JOSE POCI MENDES</option>
+<option>CEL – CENTRO DE ESTUDOS DE LÍNGUAS – vinc. Ao Fábio</option>
+<option>CELSO ANTONIO PROFESSOR</option>
+<option>DINORAH SILVA DOS SANTOS PROFA</option>
+<option>ESTEPHANO ORLANDO PAULOVSKI PROF</option>
+<option>FABIO BARRETO DOUTOR</option>
+<option>FRUTUOSO PEREIRA DE MORAES</option>
+<option>GENI CUNHA</option>
+<option>HIROSHI SAKANO</option>
+<option>IRENE MACHADO DE LIMA DONA</option>
+<option>JAYME ALMEIDA PAIVA DOUTOR</option>
+<option>JOAQUIM GOULART PROFESSOR</option>
+<option>JOSE PACHECO LOMBA</option>
+<option>JOSE RODRIGUES DE FREITAS VER</option>
+<option>JOSE VICENTE BERTOLI PROFESSOR</option>
+<option>KOKI KITAJIMA</option>
+<option>LUCÍLIA GROTHE LIBERATO</option>
+<option>LUIZ DARLY GOMES DE ARAUJO PROF</option>
+<option>MANOEL CAMILLO JUNIOR PROFESSOR</option>
+<option>MARIA ANTONIA CHULES PRINCS</option>
+<option>MARIA APARECIDA VIANA MUNIZ PROFA</option>
+<option>MARIA DAS DORES V PEREIRA PROFA</option>
+<option>MARIA JÚLIA DE FRANÇA SILVA</option>
+<option>MARIA SANTANA DE ALMEIDA PROFA</option>
+<option>MARY AZEVEDO DE CARVALHO PROFA</option>
+<option>MASSAKO OSAWA HIRABAYASHI PROFA</option>
+<option>MIGUEL ABU YAGHI CORONEL</option>
+<option>MILCIO BAZOLI PROFESSOR</option>
+<option>ODETE PEREIRA GOULART SALES PROFA</option>
+<option>PASCOAL GRECCO PROFESSOR</option>
+<option>PERICLES EUGENIO SILVA RAMOS PROF</option>
+<option>PLACIDO DE PAULA E SILVA</option>
+<option>PREFEITA ELZA ORSINI DE CARVALHO</option>
+<option>PREFEITO MÁRIO CORADIN</option>
+<option>RUY PRADO DE MENDONCA FILHO PROF</option>
+<option>YOLANDA ARAUJO SILVA PAIVA PROFA</option>
+
+</select>
+
+<select name="atendimento" required>
+<option value="">Tipo de Atendimento</option>
+<option>Informações</option>
+<option>Entrega de documento(s)</option>
+<option>Entrega de equipamento(s)</option>
+<option>Retirada de equipamento(s)</option>
+</select>
+
+<input type="email" name="email" placeholder="E-mail" required>
+
+<input type="text" name="celular" id="celular" placeholder="(00) 00000-0000" required>
+
+<button type="submit">Registrar Atendimento</button>
+
 </form>
 
 <div class="msg" id="msg"></div>
 
-<hr>
-
-<h3>Consultar Chamado</h3>
-<input id="protocolo" placeholder="Digite o protocolo">
-<button onclick="consultar()">Consultar</button>
-
-<div class="msg" id="resultado"></div>
-
+</div>
 </div>
 
 <script>
-const url = "https://script.google.com/macros/s/AKfycbwhnKW1b3E_NUowcfbPjsslLy-AS1anZH8SevWfuc3KRAnu5MC08fqjMMptDH-KLfm0/exec";
+const url = "COLE_SUA_URL_AQUI";
 
-document.getElementById("form").addEventListener("submit", function(e){
-e.preventDefault();
+const form = document.getElementById("form");
+const msg = document.getElementById("msg");
+const celular = document.getElementById("celular");
 
-fetch(url, {
-method:"POST",
-body: JSON.stringify({
-nome: this.nome.value,
-email: this.email.value,
-mensagem: this.mensagem.value
-})
-})
-.then(res=>res.json())
-.then(res=>{
-document.getElementById("msg").innerHTML =
-"Chamado aberto!<br>Protocolo: <b>"+res.protocolo+"</b>";
-this.reset();
+// Máscara celular
+celular.addEventListener("input", function(e){
+  let v = e.target.value.replace(/\D/g,"");
+
+  if(v.length > 11) v = v.slice(0,11);
+
+  if(v.length > 6){
+    v = v.replace(/(\d{2})(\d{5})(\d+)/, "($1) $2-$3");
+  } else if(v.length > 2){
+    v = v.replace(/(\d{2})(\d+)/, "($1) $2");
+  } else {
+    v = v.replace(/(\d*)/, "($1");
+  }
+
+  e.target.value = v;
 });
-});
 
-function consultar(){
-let p = document.getElementById("protocolo").value;
+// Envio
+form.addEventListener("submit", function(e){
+  e.preventDefault();
 
-fetch(url+"?protocolo="+p)
-.then(res=>res.json())
-.then(res=>{
-if(res.status=="found"){
-document.getElementById("resultado").innerHTML =
-"Status: "+res.statusChamado+"<br>Mensagem: "+res.mensagem;
-}else{
-document.getElementById("resultado").innerHTML = "Não encontrado";
-}
+  let celularLimpo = celular.value.replace(/\D/g,"");
+
+  if(celularLimpo.length !== 11){
+    msg.innerText = "Celular inválido!";
+    msg.style.color = "red";
+    return;
+  }
+
+  const protocolo = "ATD-" + Date.now();
+
+  const data = {
+    protocolo,
+    nome: form.nome.value,
+    escola: form.escola.value,
+    atendimento: form.atendimento.value,
+    email: form.email.value,
+    celular: celular.value
+  };
+
+  fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(res => {
+    msg.innerHTML = "✅ Atendimento registrado!<br>Protocolo: <b>" + protocolo + "</b>";
+    msg.style.color = "green";
+    form.reset();
+  })
+  .catch(() => {
+    msg.innerText = "Erro ao enviar.";
+    msg.style.color = "red";
+  });
 });
-}
 </script>
 
 </body>
