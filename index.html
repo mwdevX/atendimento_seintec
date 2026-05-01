@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .form-container {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      width: 350px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    input, textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .msg {
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>Contato</h2>
+
+  <form id="form">
+    <input type="text" name="nome" placeholder="Nome" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <textarea name="mensagem" placeholder="Mensagem" required></textarea>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <div class="msg" id="msg"></div>
+</div>
+
+<script>
+const form = document.getElementById("form");
+const msg = document.getElementById("msg");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const data = {
+    nome: form.nome.value,
+    email: form.email.value,
+    mensagem: form.mensagem.value
+  };
+
+  fetch("COLE_SUA_URL_AQUI", {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(res => {
+    msg.innerText = "Enviado com sucesso!";
+    msg.style.color = "green";
+    form.reset();
+  })
+  .catch(err => {
+    msg.innerText = "Erro ao enviar.";
+    msg.style.color = "red";
+  });
+});
+</script>
+
+</body>
+</html>
