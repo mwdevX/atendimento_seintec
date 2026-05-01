@@ -9,26 +9,33 @@
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
       background: #f4f6f9;
 
-      /* Centralização perfeita */
+      /* IMPORTANTE: remove altura fixa */
+      height: auto;
+    }
+
+    body {
+      display: block; /* remove o flex que quebra no iframe */
+    }
+
+    .wrapper {
+      width: 100%;
+      padding: 20px 10px;
       display: flex;
       justify-content: center;
-      align-items: center;
-
-      min-height: 100vh;
-      padding: 20px;
     }
 
     .form-container {
       background: white;
-      padding: 25px;
+      padding: 20px;
       border-radius: 12px;
       width: 100%;
-      max-width: 420px;
+      max-width: 400px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
@@ -60,18 +67,6 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      opacity: 0.9;
-      transform: scale(1.02);
-    }
-
-    button:disabled {
-      background: #999;
-      cursor: not-allowed;
-      transform: none;
     }
 
     .msg {
@@ -80,11 +75,14 @@
       font-size: 14px;
     }
 
-    /* Mobile ajustes finos */
+    /* MOBILE AJUSTE REAL */
     @media (max-width: 480px) {
+      .wrapper {
+        padding: 10px;
+      }
+
       .form-container {
-        padding: 20px;
-        border-radius: 10px;
+        padding: 15px;
       }
     }
   </style>
@@ -92,21 +90,22 @@
 
 <body>
 
-<div class="form-container">
-  <h2>Contato</h2>
+<div class="wrapper">
+  <div class="form-container">
+    <h2>Contato</h2>
 
-  <form id="form">
-    <input type="text" name="nome" placeholder="Nome" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <textarea name="mensagem" placeholder="Mensagem" required></textarea>
+    <form id="form">
+      <input type="text" name="nome" placeholder="Nome" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="mensagem" placeholder="Mensagem" required></textarea>
 
-    <!-- Anti-spam invisível -->
-    <input type="text" name="website" style="display:none">
+      <input type="text" name="website" style="display:none">
 
-    <button type="submit">Enviar</button>
-  </form>
+      <button type="submit">Enviar</button>
+    </form>
 
-  <div class="msg" id="msg"></div>
+    <div class="msg" id="msg"></div>
+  </div>
 </div>
 
 <script>
@@ -117,7 +116,6 @@ const button = form.querySelector("button");
 form.addEventListener("submit", function(e) {
   e.preventDefault();
 
-  // Anti-spam
   if (form.website.value !== "") return;
 
   button.innerText = "Enviando...";
@@ -140,7 +138,7 @@ form.addEventListener("submit", function(e) {
     form.reset();
   })
   .catch(err => {
-    msg.innerText = "Erro ao enviar. Tente novamente.";
+    msg.innerText = "Erro ao enviar.";
     msg.style.color = "red";
   })
   .finally(() => {
