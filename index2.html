@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Envio de Serviço</title>
+</head>
+<body>
+
+<h2>Registro de Atendimento</h2>
+
+<form id="form">
+  <input type="text" placeholder="Nome do técnico" id="nome" required><br><br>
+  <input type="text" placeholder="Local/Escola" id="local" required><br><br>
+  <textarea placeholder="Descrição" id="descricao"></textarea><br><br>
+
+  <label>Termo:</label>
+  <input type="file" id="termo"><br><br>
+
+  <label>Fotos:</label>
+  <input type="file" id="fotos" multiple><br><br>
+
+  <button type="submit">Enviar</button>
+</form>
+
+<script>
+const scriptURL = "COLE_AQUI_URL_DO_DEPLOY";
+
+document.getElementById("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const termoFile = document.getElementById("termo").files[0];
+  const fotosFiles = document.getElementById("fotos").files;
+
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = error => reject(error);
+    reader.readAsDataURL(file);
+  });
+
+  let termoBase64 = null;
+  if (termoFile) {
+    termoBase64 = await toBase64(termoFile);
+  }
+
+  const fotos = [];
+  for (let file of fotosFiles) {
+    const base64 = await toBase64(file);
+    fotos.push({
+      data: base64,
+      type: file.type
+    });
+  }
+
+  const payload = {
+    nome: document.getElementById("nome").value,
+    local: document.getElementById("local").value,
+    descricao: document.getElementById("descricao").value,
+    termo: termoBase64,
+    termoType: termoFile ? termoFile.type : null,
+    fotos: fotos
+  };
+
+  await fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+
+  alert("Enviado com sucesso!");
+});
+</script>
+
+</body>
+</html>
